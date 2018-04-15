@@ -1,5 +1,4 @@
-Mendix App
-=====================
+##Mendix App
 
 #### How to Build
 
@@ -9,7 +8,7 @@ Mendix App
 #### Notes
 
 - This project demos developing REST SERVICE using Spring Boot
-- Mendix App uses Lucene to index and search documents
+- This app uses Lucene to index and search documents
 - Supports below REST API calls
 
 - *GET ALL Recipes*
@@ -18,11 +17,13 @@ Mendix App
   
 - _Filter based on Index Fields_
 
-- Index Fields currently supported `title` and `category` 
-- Query supports free text search containing spaces
+    - Index Fields currently supported `title` and `category` 
+    - Query supports free text search containing spaces
 
   http://localhost:8080/recipes?title=Chili&category=Chili
+  
   http://localhost:8080/recipes?category=Chili
+  
   http://localhost:8080/recipes?category=Main dish
   
 - _GET ALL CATEGORIES_
@@ -30,8 +31,9 @@ Mendix App
    http://localhost:8080/recipes/categories
   
   
-- _ADD NEW RECIPE_ : Accepts XML as input 
-http://localhost:8080/recipes/add
+- _ADD NEW RECIPE_ : Accepts XML as input payload
+
+   http://localhost:8080/recipes/add
 
 ```
 <?xml version="1.0" encoding="UTF-8"?>
