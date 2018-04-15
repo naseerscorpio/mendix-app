@@ -77,9 +77,9 @@
                 <configuration>
                     <executable>true</executable>
                     <mainClass>com.mendix.demo.MendixApp</mainClass>
-                    <jvmArguments>
+                   <!-- <jvmArguments>
                         -Xdebug -Xrunjdwp:transport=dt_socket,server=y,suspend=y,address=5005
-                    </jvmArguments>
+                    </jvmArguments>-->
                 </configuration>
                 <executions>
                     <execution>
