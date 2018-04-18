@@ -31,7 +31,8 @@
    http://localhost:8080/recipes/categories
   
   
-- _ADD NEW RECIPE_ : Accepts XML as input payload
+- _ADD NEW RECIPE_ : 
+    Validates Input XML and if valid adds to available recipes
 
    http://localhost:8080/recipes/add
 
