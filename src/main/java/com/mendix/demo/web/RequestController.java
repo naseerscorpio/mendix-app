@@ -5,6 +5,7 @@ import com.mendix.demo.exception.MendixAppException;
 import com.mendix.demo.web.model.Result;
 import com.mendix.demo.web.response.ResponseEnvelope;
 import com.mendix.demo.web.service.RecipeService;
+import com.mendix.demo.web.util.XMLValidator;
 import org.apache.lucene.queryParser.ParseException;
 import org.apache.lucene.search.highlight.InvalidTokenOffsetsException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,6 +30,9 @@ public class RequestController {
     @Autowired
     private RecipeService recipeService;
 
+    @Autowired
+    private XMLValidator xmlValidator;
+
     @RequestMapping(method = RequestMethod.GET)
     @ResponseBody
     public ResponseEnvelope getAllRecipes(HttpServletRequest request) throws MendixAppException, ParseException, InvalidTokenOffsetsException, IOException {
@@ -48,8 +52,13 @@ public class RequestController {
 
     @RequestMapping(value = "/add", method = RequestMethod.POST)
     @ResponseBody
-    public ResponseEnvelope addRecipe(@RequestBody String recipe, HttpServletRequest request) throws MendixAppException, ParserConfigurationException, ParseException, IOException, XPathExpressionException, InvalidTokenOffsetsException, SAXException {
-        List<Result> recipes = recipeService.addRecipe(recipe);
+    public ResponseEnvelope addRecipe(@RequestBody String recipeXML, HttpServletRequest request) throws MendixAppException, ParserConfigurationException, ParseException, IOException, XPathExpressionException, InvalidTokenOffsetsException, SAXException {
+        //Validate XML
+        ResponseEnvelope response = xmlValidator.validate(recipeXML);
+        if (!response.isSuccess()) {
+            return response;
+        }
+        List<Result> recipes = recipeService.addRecipe(recipeXML);
         return getResponseEnvelope(recipes, true);
     }
 
