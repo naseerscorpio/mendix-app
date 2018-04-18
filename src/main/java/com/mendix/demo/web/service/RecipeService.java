@@ -30,7 +30,7 @@ public class RecipeService {
     @Autowired
     private LuceneIndexerAndSearcher indexerAndSearcher;
 
-    private static final String INPUT_DIRECTORY = "C:\\Personal\\Projects\\mendix-app\\src\\main\\resources\\recipes";
+    private static final String INPUT_DIRECTORY = "recipes";
 
     @PostConstruct
     public void init() throws ParserConfigurationException, IOException, XPathExpressionException, ParseException, InvalidTokenOffsetsException, SAXException, MendixAppException {

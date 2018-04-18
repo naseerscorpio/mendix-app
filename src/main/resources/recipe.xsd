@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema attributeFormDefault="unqualified" elementFormDefault="qualified" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:element name="recipeml" type="recipemlType"/>
+  <xs:complexType name="categoriesType">
+    <xs:sequence>
+      <xs:element name="cat" maxOccurs="unbounded" minOccurs="0">
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="ingredientsType">
+    <xs:sequence>
+      <xs:element type="ing-divType" name="ing-div" maxOccurs="unbounded" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="headType">
+    <xs:sequence>
+      <xs:element type="xs:string" name="title"/>
+      <xs:element type="categoriesType" name="categories"/>
+      <xs:element type="xs:string" name="yield"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="recipeType">
+    <xs:sequence>
+      <xs:element type="headType" name="head"/>
+      <xs:element type="ingredientsType" name="ingredients" minOccurs="0"/>
+      <xs:element type="directionsType" name="directions" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="amtType">
+    <xs:sequence>
+      <xs:element name="qty">
+
+      </xs:element>
+      <xs:element name="unit">
+
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="recipemlType">
+    <xs:sequence>
+      <xs:element type="recipeType" name="recipe"/>
+    </xs:sequence>
+    <xs:attribute type="xs:string" name="version"/>
+  </xs:complexType>
+  <xs:complexType name="ingType">
+    <xs:sequence>
+      <xs:element type="amtType" name="amt"/>
+      <xs:element name="item">
+
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="ing-divType">
+    <xs:sequence>
+      <xs:element name="title">
+
+      </xs:element>
+      <xs:element type="ingType" name="ing" maxOccurs="unbounded" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="directionsType">
+    <xs:sequence>
+      <xs:element type="xs:string" name="step"/>
+    </xs:sequence>
+  </xs:complexType>
+</xs:schema>
