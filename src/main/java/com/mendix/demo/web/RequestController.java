@@ -9,6 +9,8 @@ import com.mendix.demo.web.util.XMLValidator;
 import org.apache.lucene.queryParser.ParseException;
 import org.apache.lucene.search.highlight.InvalidTokenOffsetsException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.xml.sax.SAXException;
 
@@ -35,31 +37,31 @@ public class RequestController {
 
     @RequestMapping(method = RequestMethod.GET)
     @ResponseBody
-    public ResponseEnvelope getAllRecipes(HttpServletRequest request) throws MendixAppException, ParseException, InvalidTokenOffsetsException, IOException {
+    public ResponseEntity<ResponseEnvelope> getAllRecipes(HttpServletRequest request) throws MendixAppException, ParseException, InvalidTokenOffsetsException, IOException {
         Map<String, String[]> params = request.getParameterMap();
         Map<String, String[]> mParams = Maps.transformValues(params, v -> Arrays.stream(v).map(i -> i.contains(" ") ? new StringBuilder(i.length() + 2).append('"').append(i).append('"').toString() : i)
                 .toArray(String[]::new));
         List<Result> recipes = recipeService.getAllRecipes(mParams);
-        return getResponseEnvelope(recipes, true);
+        return ResponseEntity.status(HttpStatus.OK).body(getResponseEnvelope(recipes, true));
     }
 
     @RequestMapping(value = "/categories", method = RequestMethod.GET)
     @ResponseBody
-    public ResponseEnvelope getAllRecipeCatagories(HttpServletRequest request) throws MendixAppException, ParseException, InvalidTokenOffsetsException, IOException {
+    public  ResponseEntity<ResponseEnvelope> getAllRecipeCatagories(HttpServletRequest request) throws MendixAppException, ParseException, InvalidTokenOffsetsException, IOException {
         List<Result> recipes = recipeService.getAllCategories();
-        return getResponseEnvelope(recipes, true);
+        return ResponseEntity.status(HttpStatus.OK).body(getResponseEnvelope(recipes, true));
     }
 
     @RequestMapping(value = "/add", method = RequestMethod.POST)
     @ResponseBody
-    public ResponseEnvelope addRecipe(@RequestBody String recipeXML, HttpServletRequest request) throws MendixAppException, ParserConfigurationException, ParseException, IOException, XPathExpressionException, InvalidTokenOffsetsException, SAXException {
+    public  ResponseEntity<ResponseEnvelope> addRecipe(@RequestBody String recipeXML, HttpServletRequest request) throws MendixAppException, ParserConfigurationException, ParseException, IOException, XPathExpressionException, InvalidTokenOffsetsException, SAXException {
         //Validate XML
         ResponseEnvelope response = xmlValidator.validate(recipeXML);
         if (!response.isSuccess()) {
-            return response;
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
         }
         List<Result> recipes = recipeService.addRecipe(recipeXML);
-        return getResponseEnvelope(recipes, true);
+        return ResponseEntity.status(HttpStatus.OK).body(getResponseEnvelope(recipes, true));
     }
 
 
